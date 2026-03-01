@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moviesystem.mapper.UserEventMapper">
+
+    <insert id="insert">
+        INSERT INTO user_event(user_id, movie_id, event_type, score, event_time)
+        VALUES (#{userId}, #{movieId}, #{eventType}, #{score}, #{eventTime})
+    </insert>
+
+    <select id="recentViewedMovieIds" resultType="long">
+        SELECT movie_id
+        FROM user_event
+        WHERE user_id = #{userId} AND event_type = 'view'
+        ORDER BY event_time DESC
+        LIMIT #{limit}
+    </select>
+
+</mapper>

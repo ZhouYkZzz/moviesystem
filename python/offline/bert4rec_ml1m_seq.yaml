@@ -1,0 +1,52 @@
+# 数据集
+dataset: ml1m_seq
+data_path: ./recbole_data
+
+# 字段
+USER_ID_FIELD: user_id
+ITEM_ID_FIELD: item_id
+TIME_FIELD: timestamp
+
+# 让RecBole按时间排序构建序列
+load_col:
+  inter: [user_id, item_id, timestamp]
+ordering_args:
+  strategy: "by"
+  field: timestamp
+
+# 序列推荐关键
+MAX_ITEM_LIST_LENGTH: 50
+ITEM_LIST_LENGTH_FIELD: item_length
+ITEM_LIST_FIELD: item_id_list
+
+# 训练/评估划分（按时间留出最后一段）
+eval_args:
+  group_by: user
+  order: TO
+  split: { "LS": "valid_and_test" }
+  mode: full
+
+metrics: ["Recall", "NDCG", "MRR"]
+topk: [10, 20]
+valid_metric: NDCG@10
+
+# BERT4Rec 模型参数（为了一周落地：用小模型快跑）
+model: BERT4Rec
+hidden_size: 128
+num_hidden_layers: 2
+num_attention_heads: 4
+hidden_dropout_prob: 0.2
+attention_probs_dropout_prob: 0.2
+mask_ratio: 0.2
+
+# 训练参数
+epochs: 30
+train_batch_size: 256
+eval_batch_size: 256
+learning_rate: 0.001
+weight_decay: 0.0
+train_neg_sample_args: ~
+
+# 设备：Mac M4 上如果 mps 可用就用，不行就cpu也能跑
+# RecBole会用 torch.device 自动选择；你也可以手动设置：
+# device: mps

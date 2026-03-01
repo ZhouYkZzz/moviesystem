@@ -1,0 +1,197 @@
+Thu 26 Feb 2026 14:34:17 INFO  ['/Users/zhouyukai/Desktop/college/movie_system/python/offline/train_recbole.py']
+Thu 26 Feb 2026 14:34:17 INFO  
+General Hyper Parameters:
+gpu_id = 0
+use_gpu = True
+seed = 2020
+state = INFO
+reproducibility = True
+data_path = ./recbole_data/ml1m_seq
+checkpoint_dir = saved
+show_progress = True
+save_dataset = False
+dataset_save_path = None
+save_dataloaders = False
+dataloaders_save_path = None
+log_wandb = False
+
+Training Hyper Parameters:
+epochs = 5
+train_batch_size = 128
+learner = adam
+learning_rate = 0.001
+train_neg_sample_args = {'distribution': 'none', 'sample_num': 'none', 'alpha': 'none', 'dynamic': False, 'candidate_num': 0}
+eval_step = 1
+stopping_step = 10
+clip_grad_norm = None
+weight_decay = 0.0
+loss_decimal_place = 4
+
+Evaluation Hyper Parameters:
+eval_args = {'split': {'LS': 'valid_and_test'}, 'order': 'TO', 'group_by': 'user', 'mode': {'valid': 'full', 'test': 'full'}}
+repeatable = True
+metrics = ['Recall', 'NDCG', 'MRR']
+topk = [10, 20]
+valid_metric = NDCG@10
+valid_metric_bigger = True
+eval_batch_size = 128
+metric_decimal_place = 4
+
+Dataset Hyper Parameters:
+field_separator = 	
+seq_separator =  
+USER_ID_FIELD = user_id
+ITEM_ID_FIELD = item_id
+RATING_FIELD = rating
+TIME_FIELD = timestamp
+seq_len = None
+LABEL_FIELD = label
+threshold = None
+NEG_PREFIX = neg_
+load_col = {'inter': ['user_id', 'item_id', 'timestamp']}
+unload_col = None
+unused_col = None
+additional_feat_suffix = None
+rm_dup_inter = None
+val_interval = None
+filter_inter_by_user_or_item = True
+user_inter_num_interval = [0,inf)
+item_inter_num_interval = [0,inf)
+alias_of_user_id = None
+alias_of_item_id = None
+alias_of_entity_id = None
+alias_of_relation_id = None
+preload_weight = None
+normalize_field = None
+normalize_all = None
+ITEM_LIST_LENGTH_FIELD = item_length
+LIST_SUFFIX = _list
+MAX_ITEM_LIST_LENGTH = 30
+POSITION_FIELD = position_id
+HEAD_ENTITY_ID_FIELD = head_id
+TAIL_ENTITY_ID_FIELD = tail_id
+RELATION_ID_FIELD = relation_id
+ENTITY_ID_FIELD = entity_id
+benchmark_filename = None
+
+Other Hyper Parameters: 
+worker = 0
+wandb_project = recbole
+shuffle = True
+require_pow = False
+enable_amp = False
+enable_scaler = False
+transform = mask_itemseq
+n_layers = 2
+n_heads = 2
+hidden_size = 64
+inner_size = 256
+hidden_dropout_prob = 0.2
+attn_dropout_prob = 0.2
+hidden_act = gelu
+layer_norm_eps = 1e-12
+initializer_range = 0.02
+mask_ratio = 0.2
+loss_type = CE
+ft_ratio = 0.5
+numerical_features = []
+discretization = None
+kg_reverse_r = False
+entity_kg_num_interval = [0,inf)
+relation_kg_num_interval = [0,inf)
+MODEL_TYPE = ModelType.SEQUENTIAL
+ordering_args = {'strategy': 'by', 'field': 'timestamp'}
+ITEM_LIST_FIELD = item_id_list
+num_hidden_layers = 2
+num_attention_heads = 2
+attention_probs_dropout_prob = 0.2
+MODEL_INPUT_TYPE = InputType.POINTWISE
+eval_type = EvaluatorType.RANKING
+single_spec = True
+local_rank = 0
+device = cpu
+valid_neg_sample_args = {'distribution': 'uniform', 'sample_num': 'none'}
+test_neg_sample_args = {'distribution': 'uniform', 'sample_num': 'none'}
+
+
+Thu 26 Feb 2026 14:34:19 INFO  ml1m_seq
+The number of users: 6041
+Average actions of users: 210.558940397351
+The number of items: 3707
+Average actions of items: 343.16675661090125
+The number of inters: 1271776
+The sparsity of the dataset: 94.32090408911999%
+Remain Fields: ['user_id', 'item_id', 'timestamp']
+Thu 26 Feb 2026 14:34:24 INFO  [Training]: train_batch_size = [128] train_neg_sample_args: [{'distribution': 'none', 'sample_num': 'none', 'alpha': 'none', 'dynamic': False, 'candidate_num': 0}]
+Thu 26 Feb 2026 14:34:24 INFO  [Evaluation]: eval_batch_size = [128] eval_args: [{'split': {'LS': 'valid_and_test'}, 'order': 'TO', 'group_by': 'user', 'mode': {'valid': 'full', 'test': 'full'}}]
+Thu 26 Feb 2026 14:34:24 INFO  BERT4Rec(
+  (item_embedding): Embedding(3708, 64, padding_idx=0)
+  (position_embedding): Embedding(30, 64)
+  (trm_encoder): TransformerEncoder(
+    (layer): ModuleList(
+      (0-1): 2 x TransformerLayer(
+        (multi_head_attention): MultiHeadAttention(
+          (query): Linear(in_features=64, out_features=64, bias=True)
+          (key): Linear(in_features=64, out_features=64, bias=True)
+          (value): Linear(in_features=64, out_features=64, bias=True)
+          (softmax): Softmax(dim=-1)
+          (attn_dropout): Dropout(p=0.2, inplace=False)
+          (dense): Linear(in_features=64, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (out_dropout): Dropout(p=0.2, inplace=False)
+        )
+        (feed_forward): FeedForward(
+          (dense_1): Linear(in_features=64, out_features=256, bias=True)
+          (dense_2): Linear(in_features=256, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.2, inplace=False)
+        )
+      )
+    )
+  )
+  (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+  (dropout): Dropout(p=0.2, inplace=False)
+  (output_ffn): Linear(in_features=64, out_features=64, bias=True)
+  (output_gelu): GELU(approximate='none')
+  (output_ln): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+)
+Trainable parameters: 347323
+Thu 26 Feb 2026 14:34:24 INFO  FLOPs: 3109624.0
+Thu 26 Feb 2026 14:45:51 INFO  epoch 0 training [time: 686.91s, train loss: 58710.1472]
+Thu 26 Feb 2026 14:45:52 INFO  epoch 0 evaluating [time: 0.71s, valid_score: 0.111400]
+Thu 26 Feb 2026 14:45:52 INFO  valid result: 
+recall@10 : 0.2136    recall@20 : 0.318    ndcg@10 : 0.1114    ndcg@20 : 0.1377    mrr@10 : 0.0805    mrr@20 : 0.0877
+Thu 26 Feb 2026 14:45:52 INFO  Saving current: saved/BERT4Rec-Feb-26-2026_14-34-24.pth
+Thu 26 Feb 2026 14:58:04 INFO  epoch 1 training [time: 732.35s, train loss: 53530.9452]
+Thu 26 Feb 2026 14:58:05 INFO  epoch 1 evaluating [time: 0.84s, valid_score: 0.128100]
+Thu 26 Feb 2026 14:58:05 INFO  valid result: 
+recall@10 : 0.2424    recall@20 : 0.354    ndcg@10 : 0.1281    ndcg@20 : 0.1561    mrr@10 : 0.0937    mrr@20 : 0.1012
+Thu 26 Feb 2026 14:58:05 INFO  Saving current: saved/BERT4Rec-Feb-26-2026_14-34-24.pth
+Thu 26 Feb 2026 15:10:48 INFO  epoch 2 training [time: 763.22s, train loss: 52462.5672]
+Thu 26 Feb 2026 15:10:49 INFO  epoch 2 evaluating [time: 0.87s, valid_score: 0.134800]
+Thu 26 Feb 2026 15:10:49 INFO  valid result: 
+recall@10 : 0.252    recall@20 : 0.3647    ndcg@10 : 0.1348    ndcg@20 : 0.1631    mrr@10 : 0.0994    mrr@20 : 0.1071
+Thu 26 Feb 2026 15:10:49 INFO  Saving current: saved/BERT4Rec-Feb-26-2026_14-34-24.pth
+Thu 26 Feb 2026 15:24:55 INFO  epoch 3 training [time: 846.17s, train loss: 51771.8985]
+Thu 26 Feb 2026 15:24:56 INFO  epoch 3 evaluating [time: 0.93s, valid_score: 0.143000]
+Thu 26 Feb 2026 15:24:56 INFO  valid result: 
+recall@10 : 0.2551    recall@20 : 0.371    ndcg@10 : 0.143    ndcg@20 : 0.1723    mrr@10 : 0.1089    mrr@20 : 0.1169
+Thu 26 Feb 2026 15:24:56 INFO  Saving current: saved/BERT4Rec-Feb-26-2026_14-34-24.pth
+Thu 26 Feb 2026 15:39:18 INFO  epoch 4 training [time: 861.77s, train loss: 51260.1713]
+Thu 26 Feb 2026 15:39:19 INFO  epoch 4 evaluating [time: 0.95s, valid_score: 0.150700]
+Thu 26 Feb 2026 15:39:19 INFO  valid result: 
+recall@10 : 0.2634    recall@20 : 0.381    ndcg@10 : 0.1507    ndcg@20 : 0.1803    mrr@10 : 0.1165    mrr@20 : 0.1245
+Thu 26 Feb 2026 15:39:19 INFO  Saving current: saved/BERT4Rec-Feb-26-2026_14-34-24.pth
+Thu 26 Feb 2026 15:39:19 INFO  Loading model structure and parameters from saved/BERT4Rec-Feb-26-2026_14-34-24.pth
+Thu 26 Feb 2026 15:39:21 INFO  The running environment of this training is as follows:
++-------------+----------------+
+| Environment |     Usage      |
++=============+================+
+| CPU         |    34.80 %     |
++-------------+----------------+
+| GPU         |   0.0 / 0.0    |
++-------------+----------------+
+| Memory      | 1.86 G/16.00 G |
++-------------+----------------+
+Thu 26 Feb 2026 15:39:21 INFO  best valid : OrderedDict({'recall@10': 0.2634, 'recall@20': 0.381, 'ndcg@10': 0.1507, 'ndcg@20': 0.1803, 'mrr@10': 0.1165, 'mrr@20': 0.1245})
+Thu 26 Feb 2026 15:39:21 INFO  test result: OrderedDict({'recall@10': 0.2959, 'recall@20': 0.394, 'ndcg@10': 0.1843, 'ndcg@20': 0.209, 'mrr@10': 0.1503, 'mrr@20': 0.1571})

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moviesystem.mapper.MovieMapper">
+
+    <select id="list" resultType="com.moviesystem.entity.Movie">
+        SELECT id, title, genres, year
+        FROM movie
+        ORDER BY id
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="getById" resultType="com.moviesystem.entity.Movie">
+        SELECT id, title, genres, year
+        FROM movie
+        WHERE id = #{id}
+    </select>
+
+    <select id="listByIds" resultType="com.moviesystem.entity.Movie">
+        SELECT id, title, genres, year
+        FROM movie
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM movie
+    </select>
+
+
+</mapper>
