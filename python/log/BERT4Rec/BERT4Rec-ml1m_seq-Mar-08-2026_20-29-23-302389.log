@@ -1,0 +1,314 @@
+Sun 08 Mar 2026 20:29:23 INFO  ['offline\\train_recbole.py']
+Sun 08 Mar 2026 20:29:23 INFO  
+General Hyper Parameters:
+gpu_id = 0
+use_gpu = True
+seed = 2020
+state = INFO
+reproducibility = True
+data_path = ./recbole_data\ml1m_seq
+checkpoint_dir = saved
+show_progress = True
+save_dataset = False
+dataset_save_path = None
+save_dataloaders = False
+dataloaders_save_path = None
+log_wandb = False
+
+Training Hyper Parameters:
+epochs = 30
+train_batch_size = 512
+learner = adam
+learning_rate = 0.0005
+train_neg_sample_args = {'distribution': 'none', 'sample_num': 'none', 'alpha': 'none', 'dynamic': False, 'candidate_num': 0}
+eval_step = 1
+stopping_step = 5
+clip_grad_norm = None
+weight_decay = 1e-05
+loss_decimal_place = 4
+
+Evaluation Hyper Parameters:
+eval_args = {'split': {'LS': 'valid_and_test'}, 'order': 'TO', 'group_by': 'user', 'mode': {'valid': 'full', 'test': 'full'}}
+repeatable = True
+metrics = ['Recall', 'NDCG', 'MRR']
+topk = [10, 20]
+valid_metric = NDCG@10
+valid_metric_bigger = True
+eval_batch_size = 512
+metric_decimal_place = 4
+
+Dataset Hyper Parameters:
+field_separator = 	
+seq_separator =  
+USER_ID_FIELD = user_id
+ITEM_ID_FIELD = item_id
+RATING_FIELD = rating
+TIME_FIELD = timestamp
+seq_len = None
+LABEL_FIELD = label
+threshold = None
+NEG_PREFIX = neg_
+load_col = {'inter': ['user_id', 'item_id', 'timestamp']}
+unload_col = None
+unused_col = None
+additional_feat_suffix = None
+rm_dup_inter = None
+val_interval = None
+filter_inter_by_user_or_item = True
+user_inter_num_interval = [0,inf)
+item_inter_num_interval = [0,inf)
+alias_of_user_id = None
+alias_of_item_id = None
+alias_of_entity_id = None
+alias_of_relation_id = None
+preload_weight = None
+normalize_field = None
+normalize_all = None
+ITEM_LIST_LENGTH_FIELD = item_length
+LIST_SUFFIX = _list
+MAX_ITEM_LIST_LENGTH = 50
+POSITION_FIELD = position_id
+HEAD_ENTITY_ID_FIELD = head_id
+TAIL_ENTITY_ID_FIELD = tail_id
+RELATION_ID_FIELD = relation_id
+ENTITY_ID_FIELD = entity_id
+benchmark_filename = None
+
+Other Hyper Parameters: 
+worker = 0
+wandb_project = recbole
+shuffle = True
+require_pow = False
+enable_amp = False
+enable_scaler = False
+transform = mask_itemseq
+n_layers = 2
+n_heads = 2
+hidden_size = 128
+inner_size = 256
+hidden_dropout_prob = 0.1
+attn_dropout_prob = 0.2
+hidden_act = gelu
+layer_norm_eps = 1e-12
+initializer_range = 0.02
+mask_ratio = 0.2
+loss_type = CE
+ft_ratio = 0.5
+numerical_features = []
+discretization = None
+kg_reverse_r = False
+entity_kg_num_interval = [0,inf)
+relation_kg_num_interval = [0,inf)
+MODEL_TYPE = ModelType.SEQUENTIAL
+ordering_args = {'strategy': 'by', 'field': 'timestamp'}
+ITEM_LIST_FIELD = item_id_list
+num_hidden_layers = 2
+num_attention_heads = 4
+attention_probs_dropout_prob = 0.1
+device = cuda
+MODEL_INPUT_TYPE = InputType.POINTWISE
+eval_type = EvaluatorType.RANKING
+single_spec = True
+local_rank = 0
+valid_neg_sample_args = {'distribution': 'uniform', 'sample_num': 'none'}
+test_neg_sample_args = {'distribution': 'uniform', 'sample_num': 'none'}
+
+
+Sun 08 Mar 2026 20:29:25 INFO  ml1m_seq
+The number of users: 6041
+Average actions of users: 210.558940397351
+The number of items: 3707
+Average actions of items: 343.16675661090125
+The number of inters: 1271776
+The sparsity of the dataset: 94.32090408911999%
+Remain Fields: ['user_id', 'item_id', 'timestamp']
+Sun 08 Mar 2026 20:29:37 INFO  [Training]: train_batch_size = [512] train_neg_sample_args: [{'distribution': 'none', 'sample_num': 'none', 'alpha': 'none', 'dynamic': False, 'candidate_num': 0}]
+Sun 08 Mar 2026 20:29:37 INFO  [Evaluation]: eval_batch_size = [512] eval_args: [{'split': {'LS': 'valid_and_test'}, 'order': 'TO', 'group_by': 'user', 'mode': {'valid': 'full', 'test': 'full'}}]
+Sun 08 Mar 2026 20:29:37 INFO  BERT4Rec(
+  (item_embedding): Embedding(3708, 128, padding_idx=0)
+  (position_embedding): Embedding(50, 128)
+  (trm_encoder): TransformerEncoder(
+    (layer): ModuleList(
+      (0-1): 2 x TransformerLayer(
+        (multi_head_attention): MultiHeadAttention(
+          (query): Linear(in_features=128, out_features=128, bias=True)
+          (key): Linear(in_features=128, out_features=128, bias=True)
+          (value): Linear(in_features=128, out_features=128, bias=True)
+          (softmax): Softmax(dim=-1)
+          (attn_dropout): Dropout(p=0.2, inplace=False)
+          (dense): Linear(in_features=128, out_features=128, bias=True)
+          (LayerNorm): LayerNorm((128,), eps=1e-12, elementwise_affine=True)
+          (out_dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): FeedForward(
+          (dense_1): Linear(in_features=128, out_features=256, bias=True)
+          (dense_2): Linear(in_features=256, out_features=128, bias=True)
+          (LayerNorm): LayerNorm((128,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+    )
+  )
+  (LayerNorm): LayerNorm((128,), eps=1e-12, elementwise_affine=True)
+  (dropout): Dropout(p=0.1, inplace=False)
+  (output_ffn): Linear(in_features=128, out_features=128, bias=True)
+  (output_gelu): GELU(approximate='none')
+  (output_ln): LayerNorm((128,), eps=1e-12, elementwise_affine=True)
+)
+Trainable parameters: 766715
+Sun 08 Mar 2026 20:29:38 INFO  FLOPs: 14045928.0
+Sun 08 Mar 2026 20:32:23 INFO  epoch 0 training [time: 164.10s, train loss: 15200.0160]
+Sun 08 Mar 2026 20:32:23 INFO  epoch 0 evaluating [time: 0.50s, valid_score: 0.110900]
+Sun 08 Mar 2026 20:32:23 INFO  valid result: 
+recall@10 : 0.2124    recall@20 : 0.3162    ndcg@10 : 0.1109    ndcg@20 : 0.1369    mrr@10 : 0.0802    mrr@20 : 0.0873
+Sun 08 Mar 2026 20:32:23 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 20:35:15 INFO  epoch 1 training [time: 171.96s, train loss: 13209.6302]
+Sun 08 Mar 2026 20:35:16 INFO  epoch 1 evaluating [time: 0.47s, valid_score: 0.137000]
+Sun 08 Mar 2026 20:35:16 INFO  valid result: 
+recall@10 : 0.2538    recall@20 : 0.3662    ndcg@10 : 0.137    ndcg@20 : 0.1653    mrr@10 : 0.1016    mrr@20 : 0.1093
+Sun 08 Mar 2026 20:35:16 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 20:38:03 INFO  epoch 2 training [time: 167.58s, train loss: 12784.8491]
+Sun 08 Mar 2026 20:38:04 INFO  epoch 2 evaluating [time: 0.42s, valid_score: 0.154200]
+Sun 08 Mar 2026 20:38:04 INFO  valid result: 
+recall@10 : 0.2661    recall@20 : 0.3786    ndcg@10 : 0.1542    ndcg@20 : 0.1828    mrr@10 : 0.1204    mrr@20 : 0.1282
+Sun 08 Mar 2026 20:38:04 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 20:40:53 INFO  epoch 3 training [time: 169.25s, train loss: 12444.5088]
+Sun 08 Mar 2026 20:40:53 INFO  epoch 3 evaluating [time: 0.48s, valid_score: 0.175200]
+Sun 08 Mar 2026 20:40:53 INFO  valid result: 
+recall@10 : 0.2816    recall@20 : 0.3873    ndcg@10 : 0.1752    ndcg@20 : 0.2017    mrr@10 : 0.1428    mrr@20 : 0.1499
+Sun 08 Mar 2026 20:40:53 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 20:43:38 INFO  epoch 4 training [time: 164.41s, train loss: 12135.3747]
+Sun 08 Mar 2026 20:43:38 INFO  epoch 4 evaluating [time: 0.49s, valid_score: 0.183400]
+Sun 08 Mar 2026 20:43:38 INFO  valid result: 
+recall@10 : 0.2869    recall@20 : 0.3932    ndcg@10 : 0.1834    ndcg@20 : 0.2102    mrr@10 : 0.1519    mrr@20 : 0.1592
+Sun 08 Mar 2026 20:43:38 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 20:46:25 INFO  epoch 5 training [time: 166.71s, train loss: 11905.6421]
+Sun 08 Mar 2026 20:46:26 INFO  epoch 5 evaluating [time: 0.47s, valid_score: 0.191700]
+Sun 08 Mar 2026 20:46:26 INFO  valid result: 
+recall@10 : 0.2917    recall@20 : 0.4036    ndcg@10 : 0.1917    ndcg@20 : 0.2198    mrr@10 : 0.1613    mrr@20 : 0.169
+Sun 08 Mar 2026 20:46:26 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 20:49:12 INFO  epoch 6 training [time: 166.39s, train loss: 11745.6446]
+Sun 08 Mar 2026 20:49:12 INFO  epoch 6 evaluating [time: 0.31s, valid_score: 0.197900]
+Sun 08 Mar 2026 20:49:12 INFO  valid result: 
+recall@10 : 0.3013    recall@20 : 0.4063    ndcg@10 : 0.1979    ndcg@20 : 0.2242    mrr@10 : 0.1666    mrr@20 : 0.1738
+Sun 08 Mar 2026 20:49:12 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 20:51:57 INFO  epoch 7 training [time: 164.86s, train loss: 11620.6090]
+Sun 08 Mar 2026 20:51:58 INFO  epoch 7 evaluating [time: 0.38s, valid_score: 0.199300]
+Sun 08 Mar 2026 20:51:58 INFO  valid result: 
+recall@10 : 0.3013    recall@20 : 0.4081    ndcg@10 : 0.1993    ndcg@20 : 0.2261    mrr@10 : 0.1683    mrr@20 : 0.1756
+Sun 08 Mar 2026 20:51:58 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 20:54:45 INFO  epoch 8 training [time: 167.20s, train loss: 11518.5020]
+Sun 08 Mar 2026 20:54:45 INFO  epoch 8 evaluating [time: 0.52s, valid_score: 0.206200]
+Sun 08 Mar 2026 20:54:45 INFO  valid result: 
+recall@10 : 0.3103    recall@20 : 0.4141    ndcg@10 : 0.2062    ndcg@20 : 0.2323    mrr@10 : 0.1747    mrr@20 : 0.1818
+Sun 08 Mar 2026 20:54:45 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 20:57:50 INFO  epoch 9 training [time: 184.19s, train loss: 11427.2770]
+Sun 08 Mar 2026 20:57:50 INFO  epoch 9 evaluating [time: 0.59s, valid_score: 0.211600]
+Sun 08 Mar 2026 20:57:50 INFO  valid result: 
+recall@10 : 0.3151    recall@20 : 0.4179    ndcg@10 : 0.2116    ndcg@20 : 0.2376    mrr@10 : 0.1802    mrr@20 : 0.1874
+Sun 08 Mar 2026 20:57:50 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:01:04 INFO  epoch 10 training [time: 193.62s, train loss: 11341.9677]
+Sun 08 Mar 2026 21:01:04 INFO  epoch 10 evaluating [time: 0.58s, valid_score: 0.215600]
+Sun 08 Mar 2026 21:01:04 INFO  valid result: 
+recall@10 : 0.3209    recall@20 : 0.4194    ndcg@10 : 0.2156    ndcg@20 : 0.2404    mrr@10 : 0.1838    mrr@20 : 0.1905
+Sun 08 Mar 2026 21:01:04 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:04:19 INFO  epoch 11 training [time: 194.27s, train loss: 11237.4758]
+Sun 08 Mar 2026 21:04:19 INFO  epoch 11 evaluating [time: 0.57s, valid_score: 0.215200]
+Sun 08 Mar 2026 21:04:19 INFO  valid result: 
+recall@10 : 0.3162    recall@20 : 0.4222    ndcg@10 : 0.2152    ndcg@20 : 0.242    mrr@10 : 0.1844    mrr@20 : 0.1918
+Sun 08 Mar 2026 21:07:35 INFO  epoch 12 training [time: 195.45s, train loss: 11155.9435]
+Sun 08 Mar 2026 21:07:35 INFO  epoch 12 evaluating [time: 0.52s, valid_score: 0.214900]
+Sun 08 Mar 2026 21:07:35 INFO  valid result: 
+recall@10 : 0.3199    recall@20 : 0.4255    ndcg@10 : 0.2149    ndcg@20 : 0.2415    mrr@10 : 0.1831    mrr@20 : 0.1903
+Sun 08 Mar 2026 21:10:51 INFO  epoch 13 training [time: 195.38s, train loss: 11089.8991]
+Sun 08 Mar 2026 21:10:51 INFO  epoch 13 evaluating [time: 0.68s, valid_score: 0.219000]
+Sun 08 Mar 2026 21:10:51 INFO  valid result: 
+recall@10 : 0.3258    recall@20 : 0.4265    ndcg@10 : 0.219    ndcg@20 : 0.2444    mrr@10 : 0.1864    mrr@20 : 0.1933
+Sun 08 Mar 2026 21:10:51 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:14:04 INFO  epoch 14 training [time: 192.71s, train loss: 11032.7578]
+Sun 08 Mar 2026 21:14:04 INFO  epoch 14 evaluating [time: 0.49s, valid_score: 0.221600]
+Sun 08 Mar 2026 21:14:04 INFO  valid result: 
+recall@10 : 0.3273    recall@20 : 0.4278    ndcg@10 : 0.2216    ndcg@20 : 0.247    mrr@10 : 0.1895    mrr@20 : 0.1964
+Sun 08 Mar 2026 21:14:04 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:17:01 INFO  epoch 15 training [time: 176.41s, train loss: 10981.2141]
+Sun 08 Mar 2026 21:17:01 INFO  epoch 15 evaluating [time: 0.61s, valid_score: 0.225100]
+Sun 08 Mar 2026 21:17:01 INFO  valid result: 
+recall@10 : 0.3316    recall@20 : 0.4343    ndcg@10 : 0.2251    ndcg@20 : 0.251    mrr@10 : 0.1928    mrr@20 : 0.1998
+Sun 08 Mar 2026 21:17:02 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:20:09 INFO  epoch 16 training [time: 187.31s, train loss: 10921.5349]
+Sun 08 Mar 2026 21:20:09 INFO  epoch 16 evaluating [time: 0.58s, valid_score: 0.225700]
+Sun 08 Mar 2026 21:20:09 INFO  valid result: 
+recall@10 : 0.3331    recall@20 : 0.4354    ndcg@10 : 0.2257    ndcg@20 : 0.2514    mrr@10 : 0.1929    mrr@20 : 0.1998
+Sun 08 Mar 2026 21:20:09 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:23:23 INFO  epoch 17 training [time: 193.12s, train loss: 10891.2903]
+Sun 08 Mar 2026 21:23:23 INFO  epoch 17 evaluating [time: 0.57s, valid_score: 0.229100]
+Sun 08 Mar 2026 21:23:23 INFO  valid result: 
+recall@10 : 0.3356    recall@20 : 0.431    ndcg@10 : 0.2291    ndcg@20 : 0.2532    mrr@10 : 0.1967    mrr@20 : 0.2033
+Sun 08 Mar 2026 21:23:23 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:26:37 INFO  epoch 18 training [time: 194.10s, train loss: 10865.1791]
+Sun 08 Mar 2026 21:26:38 INFO  epoch 18 evaluating [time: 0.54s, valid_score: 0.231100]
+Sun 08 Mar 2026 21:26:38 INFO  valid result: 
+recall@10 : 0.343    recall@20 : 0.4371    ndcg@10 : 0.2311    ndcg@20 : 0.2548    mrr@10 : 0.1971    mrr@20 : 0.2036
+Sun 08 Mar 2026 21:26:38 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:29:43 INFO  epoch 19 training [time: 185.53s, train loss: 10830.4929]
+Sun 08 Mar 2026 21:29:44 INFO  epoch 19 evaluating [time: 0.50s, valid_score: 0.229400]
+Sun 08 Mar 2026 21:29:44 INFO  valid result: 
+recall@10 : 0.3321    recall@20 : 0.4366    ndcg@10 : 0.2294    ndcg@20 : 0.2556    mrr@10 : 0.1981    mrr@20 : 0.2052
+Sun 08 Mar 2026 21:32:48 INFO  epoch 20 training [time: 183.85s, train loss: 10792.3513]
+Sun 08 Mar 2026 21:32:48 INFO  epoch 20 evaluating [time: 0.52s, valid_score: 0.231000]
+Sun 08 Mar 2026 21:32:48 INFO  valid result: 
+recall@10 : 0.3404    recall@20 : 0.4409    ndcg@10 : 0.231    ndcg@20 : 0.2563    mrr@10 : 0.1976    mrr@20 : 0.2045
+Sun 08 Mar 2026 21:35:51 INFO  epoch 21 training [time: 183.23s, train loss: 10780.2381]
+Sun 08 Mar 2026 21:35:52 INFO  epoch 21 evaluating [time: 0.55s, valid_score: 0.233500]
+Sun 08 Mar 2026 21:35:52 INFO  valid result: 
+recall@10 : 0.3424    recall@20 : 0.4399    ndcg@10 : 0.2335    ndcg@20 : 0.258    mrr@10 : 0.2004    mrr@20 : 0.2071
+Sun 08 Mar 2026 21:35:52 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:39:01 INFO  epoch 22 training [time: 188.90s, train loss: 10750.4960]
+Sun 08 Mar 2026 21:39:02 INFO  epoch 22 evaluating [time: 0.62s, valid_score: 0.233500]
+Sun 08 Mar 2026 21:39:02 INFO  valid result: 
+recall@10 : 0.3432    recall@20 : 0.4421    ndcg@10 : 0.2335    ndcg@20 : 0.2585    mrr@10 : 0.2002    mrr@20 : 0.2071
+Sun 08 Mar 2026 21:39:02 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:42:10 INFO  epoch 23 training [time: 188.48s, train loss: 10724.8086]
+Sun 08 Mar 2026 21:42:11 INFO  epoch 23 evaluating [time: 0.55s, valid_score: 0.236900]
+Sun 08 Mar 2026 21:42:11 INFO  valid result: 
+recall@10 : 0.343    recall@20 : 0.4424    ndcg@10 : 0.2369    ndcg@20 : 0.262    mrr@10 : 0.2046    mrr@20 : 0.2115
+Sun 08 Mar 2026 21:42:11 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:45:19 INFO  epoch 24 training [time: 188.49s, train loss: 10710.9745]
+Sun 08 Mar 2026 21:45:20 INFO  epoch 24 evaluating [time: 0.57s, valid_score: 0.238200]
+Sun 08 Mar 2026 21:45:20 INFO  valid result: 
+recall@10 : 0.3474    recall@20 : 0.4469    ndcg@10 : 0.2382    ndcg@20 : 0.2633    mrr@10 : 0.2048    mrr@20 : 0.2117
+Sun 08 Mar 2026 21:45:20 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:48:30 INFO  epoch 25 training [time: 190.44s, train loss: 10690.3985]
+Sun 08 Mar 2026 21:48:31 INFO  epoch 25 evaluating [time: 0.56s, valid_score: 0.234300]
+Sun 08 Mar 2026 21:48:31 INFO  valid result: 
+recall@10 : 0.3462    recall@20 : 0.4482    ndcg@10 : 0.2343    ndcg@20 : 0.2599    mrr@10 : 0.2003    mrr@20 : 0.2072
+Sun 08 Mar 2026 21:51:42 INFO  epoch 26 training [time: 191.64s, train loss: 10666.7781]
+Sun 08 Mar 2026 21:51:43 INFO  epoch 26 evaluating [time: 0.55s, valid_score: 0.237200]
+Sun 08 Mar 2026 21:51:43 INFO  valid result: 
+recall@10 : 0.3452    recall@20 : 0.4503    ndcg@10 : 0.2372    ndcg@20 : 0.2638    mrr@10 : 0.2042    mrr@20 : 0.2115
+Sun 08 Mar 2026 21:54:54 INFO  epoch 27 training [time: 191.49s, train loss: 10667.7759]
+Sun 08 Mar 2026 21:54:55 INFO  epoch 27 evaluating [time: 0.56s, valid_score: 0.239900]
+Sun 08 Mar 2026 21:54:55 INFO  valid result: 
+recall@10 : 0.3487    recall@20 : 0.446    ndcg@10 : 0.2399    ndcg@20 : 0.2642    mrr@10 : 0.2067    mrr@20 : 0.2133
+Sun 08 Mar 2026 21:54:55 INFO  Saving current: saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 21:58:06 INFO  epoch 28 training [time: 190.87s, train loss: 10633.1692]
+Sun 08 Mar 2026 21:58:06 INFO  epoch 28 evaluating [time: 0.66s, valid_score: 0.239700]
+Sun 08 Mar 2026 21:58:06 INFO  valid result: 
+recall@10 : 0.3528    recall@20 : 0.4482    ndcg@10 : 0.2397    ndcg@20 : 0.2638    mrr@10 : 0.2053    mrr@20 : 0.2119
+Sun 08 Mar 2026 22:01:18 INFO  epoch 29 training [time: 191.55s, train loss: 10630.1241]
+Sun 08 Mar 2026 22:01:19 INFO  epoch 29 evaluating [time: 0.55s, valid_score: 0.239100]
+Sun 08 Mar 2026 22:01:19 INFO  valid result: 
+recall@10 : 0.3492    recall@20 : 0.4498    ndcg@10 : 0.2391    ndcg@20 : 0.2645    mrr@10 : 0.2056    mrr@20 : 0.2125
+Sun 08 Mar 2026 22:01:19 INFO  Loading model structure and parameters from saved\BERT4Rec-Mar-08-2026_20-29-38.pth
+Sun 08 Mar 2026 22:01:20 INFO  The running environment of this training is as follows:
++-------------+----------------+
+| Environment |     Usage      |
++=============+================+
+| CPU         |    48.50 %     |
++-------------+----------------+
+| GPU         | 0.91 G/15.92 G |
++-------------+----------------+
+| Memory      | 1.27 G/31.75 G |
++-------------+----------------+
+Sun 08 Mar 2026 22:01:20 INFO  best valid : OrderedDict([('recall@10', 0.3487), ('recall@20', 0.446), ('ndcg@10', 0.2399), ('ndcg@20', 0.2642), ('mrr@10', 0.2067), ('mrr@20', 0.2133)])
+Sun 08 Mar 2026 22:01:20 INFO  test result: OrderedDict([('recall@10', 0.3717), ('recall@20', 0.4631), ('ndcg@10', 0.2714), ('ndcg@20', 0.2944), ('mrr@10', 0.2409), ('mrr@20', 0.2472)])
