@@ -15,5 +15,21 @@
         ORDER BY event_time DESC
         LIMIT #{limit}
     </select>
+    <select id="getUserHistory" resultType="com.moviesystem.dto.HistoryDTO">
+        select
+        m.id as movieId,
+        m.title,
+        m.genres,
+        m.year,
+        max(ue.event_time) as eventTime
+        from user_event ue
+        join movie m on ue.movie_id = m.id
+        where ue.user_id = #{userId}
+        and ue.event_type = 'view'
+        group by m.id, m.title, m.genres, m.year
+        order by eventTime desc
+        limit 50
+    </select>
+
 
 </mapper>

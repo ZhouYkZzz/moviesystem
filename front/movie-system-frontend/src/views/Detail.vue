@@ -23,7 +23,10 @@
 
         <div class="controls" style="justify-content: flex-start;">
           <button class="btn" @click="fav">收藏</button>
-          <button class="btn" @click="rate5">点赞</button>
+          <select class="input" v-model.number="ratingScore" style="min-width: 100px;">
+            <option v-for="s in [1, 2, 3, 4, 5]" :key="s" :value="s">{{ s }} 分</option>
+          </select>
+          <button class="btn" @click="rateMovie">评分</button>
           <button class="btn" @click="viewAgain">观看（+热度）</button>
         </div>
 
@@ -44,6 +47,7 @@ import { getMovie, postEvent } from "../api/reco";
 const route = useRoute();
 const userStore = useUserStore();
 const movie = ref(null);
+const ratingScore = ref(5);
 
 async function load() {
   const id = Number(route.params.id);
@@ -65,10 +69,10 @@ async function fav() {
   alert("已收藏（热门热度+3）");
 }
 
-async function rate5() {
+async function rateMovie() {
   const id = Number(route.params.id);
-  await postEvent({ userId: userStore.userId, movieId: id, type: "rate", score: 5.0 });
-  alert("已点赞（热门热度+5）");
+  await postEvent({ userId: userStore.userId, movieId: id, type: "rate", score: ratingScore.value });
+  alert(`已评分 ${ratingScore.value} 分`);
 }
 
 onMounted(load);

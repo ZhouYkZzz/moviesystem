@@ -23,3 +23,16 @@ export function getHot2(size = 20) {
 export function getMoviesPage(page = 1, size = 20) {
   return http.get(`/api/movies/page?page=${page}&size=${size}`);
 }
+export function getUserHistory(userId) {
+  return http.get('/api/history', {
+    params: { userId }
+  })
+}
+
+export function loginByUserId(userId, password) {
+  return http.post("/api/auth/login", { userId, password });
+}
+
+export function registerUser(password) {
+  return http.post("/api/auth/register", { password });
+}

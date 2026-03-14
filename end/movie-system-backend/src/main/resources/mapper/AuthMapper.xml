@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moviesystem.mapper.AuthMapper">
+
+    <select id="findMaxUserId" resultType="long">
+        SELECT GREATEST(
+            COALESCE((SELECT MAX(id) FROM ml_user), 0),
+            COALESCE((SELECT MAX(user_id) FROM user_event), 0),
+            COALESCE((SELECT MAX(user_id) FROM user_reco), 0)
+        )
+    </select>
+
+    <select id="existsUserId" resultType="boolean">
+        SELECT (
+            EXISTS(SELECT 1 FROM ml_user WHERE id = #{userId})
+            OR EXISTS(SELECT 1 FROM user_event WHERE user_id = #{userId})
+            OR EXISTS(SELECT 1 FROM user_reco WHERE user_id = #{userId})
+        )
+    </select>
+
+    <insert id="insertUser">
+        INSERT IGNORE INTO ml_user(id)
+        VALUES (#{userId})
+    </insert>
+
+</mapper>

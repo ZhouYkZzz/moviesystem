@@ -7,19 +7,12 @@
       </div>
 
       <div class="controls">
-        <span class="muted">模拟用户ID</span>
-
-        <!-- 推荐：下拉选择（都是你 user_reco 里有数据的） -->
-        <select class="input" v-model="userIdInput">
-          <option v-for="id in demoUsers" :key="id" :value="String(id)">{{ id }}</option>
-        </select>
-
-        <!-- 也保留输入框：想随便试别的ID也可以 -->
-        <input class="input" v-model="userIdInput" placeholder="也可手动输入" style="min-width: 120px;" />
-
-        <button class="btn" @click="applyUser">应用</button>
+        <span class="muted">当前用户ID：{{ userStore.userId }}</span>
         <button class="btn" @click="reloadAll">刷新</button>
+        <button class="btn" @click="$router.push('/history')">浏览历史</button>
+        <button class="btn" @click="switchUser">切换用户</button>
       </div>
+
     </div>
 
     <!-- 个性化推荐 -->
@@ -110,19 +103,12 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from "../store/user";
 import { getHot2, getReco, getMoviesPage } from "../api/reco";
 
 const userStore = useUserStore();
-
-// 这是你贴出来的 user_reco 用户列表（演示用）
-const demoUsers = [
-  195,229,343,349,355,398,403,419,424,496,
-  518,624,648,736,839,840,911,937,1015,1019
-];
-
-const userIdInput = ref(String(userStore.userId || 195));
-if (!userStore.userId) userStore.setUserId(195);
+const router = useRouter();
 
 const reco = ref([]);
 const hotRanked = ref([]);
@@ -157,9 +143,9 @@ async function reloadAll() {
   await Promise.all([loadReco(), loadHot(), loadMovies()]);
 }
 
-function applyUser() {
-  userStore.setUserId(userIdInput.value);
-  loadReco();
+function switchUser() {
+  userStore.logout();
+  router.push("/login");
 }
 
 // ======= 全部电影分页 =======

@@ -1,5 +1,6 @@
 package com.moviesystem.mapper;
 
+import com.moviesystem.dto.HistoryDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,6 +14,7 @@ public interface UserEventMapper {
                @Param("eventType") String eventType,
                @Param("score") Double score,
                @Param("eventTime") LocalDateTime eventTime);
+    List<HistoryDTO> getUserHistory(@Param("userId") Long userId);
 
     List<Long> recentViewedMovieIds(@Param("userId") Long userId, @Param("limit") int limit);
 }
