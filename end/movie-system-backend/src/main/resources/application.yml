@@ -19,3 +19,6 @@ mybatis:
   type-aliases-package: com.moviesystem.entity
   configuration:
     map-underscore-to-camel-case: true
+
+app:
+  poster-dir: ${POSTER_DIR:${user.home}/.movie-system/posters}

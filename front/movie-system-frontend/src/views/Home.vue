@@ -31,7 +31,16 @@
           class="card"
           :to="`/movie/${m.id}`"
         >
-          <div class="rank">NO.{{ idx + 1 }}</div>
+          <div class="poster-shell">
+            <img
+              class="poster-img"
+              :src="posterOf(m.posterUrl)"
+              :alt="`${m.title} 海报`"
+              loading="lazy"
+              @error="onPosterError"
+            />
+            <div class="rank">NO.{{ idx + 1 }}</div>
+          </div>
           <p class="card-title">{{ m.title }}</p>
           <div class="badges">
             <span class="badge">{{ m.year || "----" }}</span>
@@ -56,7 +65,16 @@
           class="card"
           :to="`/movie/${x.movie.id}`"
         >
-          <div class="rank">NO.{{ idx + 1 }}</div>
+          <div class="poster-shell">
+            <img
+              class="poster-img"
+              :src="posterOf(x.movie.posterUrl)"
+              :alt="`${x.movie.title} 海报`"
+              loading="lazy"
+              @error="onPosterError"
+            />
+            <div class="rank">NO.{{ idx + 1 }}</div>
+          </div>
           <p class="card-title">{{ x.movie.title }}</p>
           <div class="badges">
             <span class="badge">{{ x.movie.year || "----" }}</span>
@@ -88,7 +106,16 @@
           class="card"
           :to="`/movie/${m.id}`"
         >
-          <div class="rank">#{{ (page - 1) * pageSize + idx + 1 }}</div>
+          <div class="poster-shell">
+            <img
+              class="poster-img"
+              :src="posterOf(m.posterUrl)"
+              :alt="`${m.title} 海报`"
+              loading="lazy"
+              @error="onPosterError"
+            />
+            <div class="rank">#{{ (page - 1) * pageSize + idx + 1 }}</div>
+          </div>
           <p class="card-title">{{ m.title }}</p>
           <div class="badges">
             <span class="badge">{{ m.year || "----" }}</span>
@@ -106,9 +133,11 @@ import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../store/user";
 import { getHot2, getReco, getMoviesPage } from "../api/reco";
+import { API_BASE_URL } from "../api/http";
 
 const userStore = useUserStore();
 const router = useRouter();
+const FALLBACK_POSTER = "/poster-placeholder.svg";
 
 const reco = ref([]);
 const hotRanked = ref([]);
@@ -120,6 +149,19 @@ function formatHeat(x) {
   // 热度显示更“明显”
   if (x == null) return 0;
   return Math.round(x * 10) / 10;
+}
+
+function posterOf(url) {
+  if (!url) return FALLBACK_POSTER;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `${API_BASE_URL}${url}`;
+}
+
+function onPosterError(event) {
+  const img = event?.target;
+  if (!img || img.dataset.fallback === "1") return;
+  img.dataset.fallback = "1";
+  img.src = FALLBACK_POSTER;
 }
 
 async function loadReco() {

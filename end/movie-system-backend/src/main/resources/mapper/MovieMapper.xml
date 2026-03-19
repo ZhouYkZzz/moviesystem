@@ -4,20 +4,20 @@
 <mapper namespace="com.moviesystem.mapper.MovieMapper">
 
     <select id="list" resultType="com.moviesystem.entity.Movie">
-        SELECT id, title, genres, year
+        SELECT id, title, genres, year, poster_url
         FROM movie
         ORDER BY id
         LIMIT #{size} OFFSET #{offset}
     </select>
 
     <select id="getById" resultType="com.moviesystem.entity.Movie">
-        SELECT id, title, genres, year
+        SELECT id, title, genres, year, poster_url
         FROM movie
         WHERE id = #{id}
     </select>
 
     <select id="listByIds" resultType="com.moviesystem.entity.Movie">
-        SELECT id, title, genres, year
+        SELECT id, title, genres, year, poster_url
         FROM movie
         WHERE id IN
         <foreach collection="ids" item="id" open="(" close=")" separator=",">

@@ -7,6 +7,7 @@ public class HistoryDTO {
     private String title;
     private String genres;
     private Integer year;
+    private String posterUrl;
     private LocalDateTime eventTime;
 
     public Long getMovieId() {
@@ -39,6 +40,14 @@ public class HistoryDTO {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 
     public LocalDateTime getEventTime() {

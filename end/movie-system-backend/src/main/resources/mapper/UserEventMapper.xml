@@ -21,12 +21,13 @@
         m.title,
         m.genres,
         m.year,
+        m.poster_url as posterUrl,
         max(ue.event_time) as eventTime
         from user_event ue
         join movie m on ue.movie_id = m.id
         where ue.user_id = #{userId}
         and ue.event_type = 'view'
-        group by m.id, m.title, m.genres, m.year
+        group by m.id, m.title, m.genres, m.year, m.poster_url
         order by eventTime desc
         limit 50
     </select>

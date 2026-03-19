@@ -23,10 +23,19 @@
           :key="item.movieId"
           @click="goDetail(item.movieId)"
         >
-          <h3>{{ item.title }}</h3>
-          <p>类型：{{ item.genres }}</p>
-          <p>年份：{{ item.year }}</p>
-          <p>最近浏览时间：{{ item.eventTime }}</p>
+          <img
+            class="history-poster"
+            :src="posterOf(item.posterUrl)"
+            :alt="`${item.title} 海报`"
+            loading="lazy"
+            @error="onPosterError"
+          />
+          <div class="history-meta">
+            <h3>{{ item.title }}</h3>
+            <p>类型：{{ item.genres }}</p>
+            <p>年份：{{ item.year }}</p>
+            <p>最近浏览时间：{{ item.eventTime }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -36,6 +45,7 @@
 <script>
 import { getUserHistory } from '../api/reco'
 import { useUserStore } from '../store/user'
+import { API_BASE_URL } from '../api/http'
 
 export default {
   name: 'History',
@@ -51,6 +61,17 @@ export default {
     this.historyList = res.data || res || []
   },
   methods: {
+    posterOf(url) {
+      if (!url) return '/poster-placeholder.svg'
+      if (url.startsWith('http://') || url.startsWith('https://')) return url
+      return `${API_BASE_URL}${url}`
+    },
+    onPosterError(event) {
+      const img = event?.target
+      if (!img || img.dataset.fallback === '1') return
+      img.dataset.fallback = '1'
+      img.src = '/poster-placeholder.svg'
+    },
     goDetail(id) {
       this.$router.push(`/movie/${id}`)
     }
@@ -67,19 +88,52 @@ export default {
 }
 
 .history-card {
-  border: 1px solid #ddd;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 14px;
+  align-items: start;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .history-card:hover {
-  background: #f8f8f8;
+  background: rgba(255,255,255,0.1);
+}
+
+.history-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.history-meta h3 {
+  margin: 0 0 8px;
+}
+
+.history-meta p {
+  margin: 0 0 5px;
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
 }
 
 .empty {
-  color: #999;
+  color: #b5bad2;
   margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+  .history-card {
+    grid-template-columns: 1fr;
+  }
+
+  .history-poster {
+    max-width: 160px;
+  }
 }
 </style>

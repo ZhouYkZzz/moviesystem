@@ -39,7 +39,13 @@ def import_movies(conn):
             rows.append((mid, title, genres, year))
             if len(rows) >= BATCH_SIZE:
                 cur.executemany(
-                    "REPLACE INTO movie(id,title,genres,year) VALUES(%s,%s,%s,%s)",
+                    """
+                    INSERT INTO movie(id,title,genres,year) VALUES(%s,%s,%s,%s)
+                    ON DUPLICATE KEY UPDATE
+                        title = VALUES(title),
+                        genres = VALUES(genres),
+                        year = VALUES(year)
+                    """,
                     rows
                 )
                 conn.commit()
@@ -47,7 +53,13 @@ def import_movies(conn):
 
     if rows:
         cur.executemany(
-            "REPLACE INTO movie(id,title,genres,year) VALUES(%s,%s,%s,%s)",
+            """
+            INSERT INTO movie(id,title,genres,year) VALUES(%s,%s,%s,%s)
+            ON DUPLICATE KEY UPDATE
+                title = VALUES(title),
+                genres = VALUES(genres),
+                year = VALUES(year)
+            """,
             rows
         )
         conn.commit()
